@@ -237,8 +237,8 @@ async function encryptPayload(plain: string, secret: string): Promise<EncryptedP
 Deno.serve(async (request: Request) => {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS_HEADERS });
 
-  const supabaseUrl = (Deno.env.get("SUPABASE_URL") || "").replace(/\/$/, "");
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  const supabaseUrl = (Deno.env.get("SITE_SUPABASE_URL") || Deno.env.get("SUPABASE_URL") || "").replace(/\/$/, "");
+  const serviceKey = Deno.env.get("SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   if (!supabaseUrl || !serviceKey) return json({ ok: false, error: "Supabase 环境缺失。" }, 503);
 
   const restHeaders = {
